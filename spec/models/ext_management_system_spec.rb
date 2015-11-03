@@ -16,6 +16,7 @@ describe ExtManagementSystem do
       kubernetes
       openshift
       atomic
+      openshift_enterprise
       openstack
       openstack_infra
       rhevm
