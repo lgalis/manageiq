@@ -7,25 +7,27 @@
 - :name: chargeback_download_main
   :items:
   - :buttonSelect: chargeback_download_choice
-    :icon: fa fa-download fa-lg
+    :image: download
     :title: "Download"
     :items:
     - :button: chargeback_download_text
-      :icon: fa fa-file-text-o fa-lg
+      :image: txt
       :title: "Download this report in text format"
+      :text: "Download as Text"
       :url: '/render_txt'
     - :button: chargeback_download_csv
-      :icon: fa fa-file-text-o fa-lg
+      :image: csv
       :title: "Download this report in CSV format"
+      :text: "Download as CSV"
       :url: '/render_csv'
     - :button: chargeback_download_pdf
-      :icon: fa fa-file-pdf-o fa-lg
+      :image: pdf
       :title: "Download this report in PDF format"
+      :text: "Download as PDF"
       :url: '/render_pdf'
   - :button: chargeback_report_only
     :image: reportonly
     :url: '/report_only'
-    #:url_parms: '?type=#{@ght_type}'
     :url_parms: 'popup_only'
     :popup: true
     :title: "Show full screen report"
