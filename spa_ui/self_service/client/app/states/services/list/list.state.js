@@ -93,6 +93,11 @@
             sortType: 'numeric'
           },
           {
+            id: 'vms',
+            title:  'Number of VMs',
+            sortType: 'numeric'
+          },
+          {
             id: 'owner',
             title:  'Owner',
             sortType: 'alpha'
@@ -127,6 +132,8 @@
       var compValue = 0;
       if (vm.toolbarConfig.sortConfig.currentField.id === 'name') {
         compValue = item1.name.localeCompare(item2.name);
+      } else if (vm.toolbarConfig.sortConfig.currentField.id === 'vms') {
+        compValue = item1.v_total_vms - item2.v_total_vms;
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'owner') {
         compValue = item1.evm_owner.name.localeCompare(item2.evm_owner.name);
       } else if (vm.toolbarConfig.sortConfig.currentField.id === 'created') {
