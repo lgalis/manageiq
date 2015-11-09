@@ -168,5 +168,4 @@ angular.module('topologyApp', ['kubernetesUI','ui.bootstrap'])
 
     }
 
-
     }]);
