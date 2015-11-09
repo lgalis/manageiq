@@ -1007,6 +1007,11 @@ class ApplicationHelper::ToolbarBuilder
       when "host_restart"
         return @record.is_available_now_error_message(:reboot) if @record.is_available_now_error_message(:reboot)
       end
+    when "Container"
+      case id
+      when "container_timeline"
+        return "No Timeline data has been collected for this Container" unless @record.has_events? || @record.has_events?(:policy_events)
+      end
     when "ContainerNode"
       case id
       when "container_node_timeline"
