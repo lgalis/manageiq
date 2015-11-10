@@ -1923,6 +1923,7 @@ class VmOrTemplate < ActiveRecord::Base
     {:available => true,   :message => nil}
   end
 
+  # Check for archived and orphaned VMs.
   def validate_supported_check(message_prefix)
     return {:available => false, :message => nil} if self.archived?
     if self.orphaned?
