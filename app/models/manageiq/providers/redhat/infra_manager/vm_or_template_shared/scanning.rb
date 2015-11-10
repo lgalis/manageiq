@@ -47,6 +47,7 @@ module ManageIQ::Providers::Redhat::InfraManager::VmOrTemplateShared::Scanning
     $log.info "#{log_header}: Connecting to [#{ems_display_text}] for VM:[#{@vm_cfg_file}]"
 
     begin
+      # Connect through the VM's ext_management_system.
       ost.miqRhevm = ext_management_system.rhevm_inventory
       $log.info "Connection to [#{ems_display_text}] completed for VM:[#{@vm_cfg_file}] in [#{Time.now - st}] seconds"
     rescue Timeout::Error => err
