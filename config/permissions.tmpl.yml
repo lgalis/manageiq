@@ -20,4 +20,5 @@
 - ems-type:openshift
 - ems-type:atomic
 - ems-type:openshift_enterprise
+- ems-type:atomic_enterprise
 - ems-type:foreman_provisioning
