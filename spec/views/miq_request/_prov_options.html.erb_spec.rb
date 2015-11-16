@@ -25,10 +25,10 @@ describe 'miq_request/_prov_options.html.haml' do
       @users = [@admin, @vm_user, @desktop, @approver]
 
       # Create requests
-      FactoryGirl.create(:vm_migrate_request, :userid => @admin.userid)
-      FactoryGirl.create(:vm_migrate_request, :userid => @vm_user.userid)
-      FactoryGirl.create(:vm_migrate_request, :userid => @desktop.userid)
-      FactoryGirl.create(:vm_migrate_request, :userid => @approver.userid)
+      FactoryGirl.create(:vm_migrate_request, :requester => @admin)
+      FactoryGirl.create(:vm_migrate_request, :requester => @vm_user)
+      FactoryGirl.create(:vm_migrate_request, :requester => @desktop)
+      FactoryGirl.create(:vm_migrate_request, :requester => @approver)
 
       # Set instance variables
       sb = {:prov_options => {
@@ -76,7 +76,7 @@ describe 'miq_request/_prov_options.html.haml' do
       role    = FactoryGirl.create(:miq_user_role, :name    => 'EvmRole-desktop')
       group   = FactoryGirl.create(:miq_group, :description => 'EvmGroup-desktop',  :miq_user_role => role)
       desktop = FactoryGirl.create(:user, :name => 'Desktop',  :userid => 'desktop',  :miq_groups => [group])
-      FactoryGirl.create(:vm_migrate_request, :userid => desktop.userid)
+      FactoryGirl.create(:vm_migrate_request, :requester => desktop)
 
       sb = {:prov_options => {
         :resource_type       => :MiqProvisionRequest,
@@ -102,7 +102,7 @@ describe 'miq_request/_prov_options.html.haml' do
       role    = FactoryGirl.create(:miq_user_role, :name => 'EvmRole-vm_user')
       group   = FactoryGirl.create(:miq_group, :description => 'EvmGroup-vm_user', :miq_user_role => role)
       vm_user = FactoryGirl.create(:user, :name => 'VM User', :userid => 'vm_user', :miq_groups => [group])
-      FactoryGirl.create(:vm_migrate_request, :userid => vm_user.userid)
+      FactoryGirl.create(:vm_migrate_request, :requester => vm_user)
 
       # Set instance variables
       sb = {:prov_options => {
