@@ -187,11 +187,11 @@ describe ExtManagementSystem do
         end.not_to raise_error
       end
 
-      it "allows duplicate hostname across tenants" do
+      it "does not allow duplicate hostname across tenants" do
         tenant = FactoryGirl.create(:tenant)
         expect do
           FactoryGirl.create(:ems_vmware, :hostname => @same_host_name, :tenant => tenant)
-        end.not_to raise_error
+        end.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
