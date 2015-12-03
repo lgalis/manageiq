@@ -91,13 +91,15 @@ describe Dialog do
 
   context "#add_resource" do
     before(:each) do
-      @dialog       = FactoryGirl.create(:dialog, :label => 'dialog')
+      @dialog       = FactoryGirl.build(:dialog, :label => 'dialog')
       @dialog_tab   = FactoryGirl.create(:dialog_tab, :label => 'tab')
       @dialog_group = FactoryGirl.create(:dialog_group, :label => 'group')
       @dialog_field = FactoryGirl.create(:dialog_field, :label => 'field 1', :name => 'field_1')
     end
 
     it "dialog contain tabs" do
+      @dialog_group.add_resource(@dialog_field)
+      @dialog_tab.add_resource(@dialog_group)
       @dialog.add_resource(@dialog_tab)
       @dialog.save
       @dialog.dialog_tabs.should have(1).thing
@@ -118,13 +120,15 @@ describe Dialog do
 
   context "#add_resource!" do
     before(:each) do
-      @dialog       = FactoryGirl.create(:dialog, :label => 'dialog')
+      @dialog       = FactoryGirl.build(:dialog, :label => 'dialog')
       @dialog_tab   = FactoryGirl.create(:dialog_tab, :label => 'tab')
       @dialog_group = FactoryGirl.create(:dialog_group, :label => 'group')
       @dialog_field = FactoryGirl.create(:dialog_field, :label => 'field 1', :name => 'field_1')
     end
 
     it "dialogs contain tabs" do
+      @dialog_group.add_resource!(@dialog_field)
+      @dialog_tab.add_resource!(@dialog_group)
       @dialog.add_resource!(@dialog_tab)
       @dialog.dialog_tabs.should have(1).thing
     end
@@ -306,6 +310,21 @@ describe Dialog do
 
     it "dialog" do
       @dialog.dialog_fields.count.should == 2
+    end
+  end
+
+  context "validate children before save" do
+    let(:dialog) { FactoryGirl.build(:dialog, :label => 'dialog') }
+
+    it "fails without tab" do
+      expect { dialog.save! }.to raise_error(ActiveRecord::RecordInvalid, "Validation failed: Dialog #{dialog.label} must have at least one Tab")
+    end
+
+    it "validates with tab" do
+      dialog.add_resource(FactoryGirl.create(:dialog_tab, :label => 'tab'))
+      expect_any_instance_of(DialogTab).to receive(:valid?)
+      expect(dialog.errors.full_messages).to be_empty
+      dialog.validate_children
     end
   end
 end
