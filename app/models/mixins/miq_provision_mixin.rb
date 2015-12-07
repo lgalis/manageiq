@@ -191,6 +191,7 @@ module MiqProvisionMixin
     if custom_spec_name.nil?
       disable_customization_spec
     else
+      custom_spec_name = custom_spec_name.name unless custom_spec_name.kind_of?(String)
       options = self.options.dup
       prov_wf = workflow
       options[:sysprep_enabled]       = ['fields', 'Specification']
