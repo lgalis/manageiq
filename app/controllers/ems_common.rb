@@ -38,6 +38,10 @@ module EmsCommon
       @lastaction = "show_timeline"
       tl_build_timeline                       # Create the timeline report
       drop_breadcrumb(:name => "Timelines", :url => show_link(@record, :refresh => "n", :display => "timeline"))
+    elsif @display == "performance"
+      @showtype = "performance"
+      drop_breadcrumb(:name => "#{@record.name} Capacity & Utilization", :url => "/#{@table_name}/show/#{@record.id}?display=#{@display}&refresh=n")
+      perf_gen_init_options               # Initialize perf chart options, charts will be generated async
     elsif ["instances", "images", "miq_templates", "vms"].include?(@display) || session[:display] == "vms" && params[:display].nil?
       if @display == "instances"
         title = "Instances"
