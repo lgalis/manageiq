@@ -1,6 +1,7 @@
 //= require miq_global
 //= require jquery
 //= require jquery_overrides
+//= require patternfly
 //= require angular
 //= require angular-patternfly
 //= require angular-ui-bootstrap
@@ -77,7 +78,6 @@
 //= require bootstrap-filestyle
 //= require bootstrap-select
 //= require bootstrap-hover-dropdown
-//= require patternfly
 //= require jquery.observe_field
 //= require miq_jquery_ujs_rails3
 //= require miq_ujs_bindings
