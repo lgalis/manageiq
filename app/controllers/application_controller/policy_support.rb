@@ -89,9 +89,9 @@ module ApplicationController::PolicySupport
     session[:policies] = {} unless params[:continue]  # Clear current policies, unless continuing previous simulation
     policy_sim_build_screen
     @tabs = [["polsim", nil], ["polsim", "Policy Simulation"]]
+    @in_a_form = true
     if @explorer
       @record = @tagitems.first
-      @in_a_form = true
       if params[:action] == "policy_sim"
         @refresh_partial = "layouts/policy_sim"
         replace_right_cell

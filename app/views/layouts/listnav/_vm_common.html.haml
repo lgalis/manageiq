@@ -99,7 +99,7 @@
               :title => _("Show this Vm's parent %s") % ui_lookup(:table => "ems_infra"))
 
         - if role_allows(:feature => "host_show")
-          - if @record.host.nil?
+          - unless @record.host.nil?
             %li
               = link_to_with_icon("#{host_title}: #{@record.host.name}",
                 {:controller => "host", :action => 'show', :id => @record.host.id.to_s},
@@ -132,7 +132,7 @@
         - if @record.parents.length > 0
           %li
             = link_to(_("Parent VM: %s") % @record.parents.first.name,
-              {:controller => "vm", :action => 'guest_application', :id => @record.parents.first},
+              {:controller => "vm", :action => 'guest_applications', :id => @record.parents.first},
               :title => _("Show this VM's parent"))
         - else
           %li.disabled
