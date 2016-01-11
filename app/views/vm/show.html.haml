@@ -5,3 +5,6 @@
     = render :partial => "vm_common/right_size"
   - elsif @reconfigure
     = render :partial => "vm_common/reconfigure"
+  - elsif @showtype == "policies"
+    = render :partial => "vm_common/policies"
+

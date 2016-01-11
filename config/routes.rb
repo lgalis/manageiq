@@ -1791,6 +1791,7 @@ Vmdb::Application.routes.draw do
       :post => %w(
         edit_vm
         form_field_changed
+        guest_applications
         policy_sim
         policy_sim_add
         policy_sim_remove
@@ -1819,6 +1820,7 @@ Vmdb::Application.routes.draw do
         retirement_info
         launch_html5_console
         perf_chart_chooser
+        policies
         protect
         retire
         show
