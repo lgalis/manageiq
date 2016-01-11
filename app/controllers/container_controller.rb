@@ -85,6 +85,11 @@ class ContainerController < ApplicationController
     end
   end
 
+  def show_list
+    redirect_to :controller => "container",
+                :action     => "explorer"
+  end
+
   def explorer
     @explorer   = true
     @lastaction = "explorer"

@@ -43,7 +43,7 @@
 //= require controllers/ops/tenant_quota_form_controller
 //= require controllers/container_dashboard/container_dashboard_controller
 //= require controllers/container_dashboard/container_dashboard_utils
-//= require controllers/container_dashboard/pf-fixes
+//= require controllers/ems_common/single_provider_dashboard_controller
 //= require controllers/container_topology/container_topology_controller
 //= require d3/d3
 //= require c3/c3
