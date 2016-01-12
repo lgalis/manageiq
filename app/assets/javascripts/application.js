@@ -1,6 +1,7 @@
 //= require miq_global
 //= require jquery
 //= require jquery_overrides
+//= require patternfly
 //= require angular
 //= require angular-patternfly
 //= require angular-ui-bootstrap
@@ -41,9 +42,12 @@
 //= require controllers/ops/log_collection_form_controller
 //= require controllers/ops/tenant_form_controller
 //= require controllers/ops/tenant_quota_form_controller
+//= require controllers/container_dashboard/util/dashboard-util-module
+//= require controllers/container_dashboard/util/dashboard-utils-factory
+//= require controllers/container_dashboard/util/charts-mixin
 //= require controllers/container_dashboard/container_dashboard_controller
-//= require controllers/container_dashboard/container_dashboard_utils
-//= require controllers/ems_common/single_provider_dashboard_controller
+//= require controllers/container_dashboard/card/card-module
+//= require controllers/container_dashboard/card/heatmaps/heatmaps-card-directive
 //= require controllers/container_topology/container_topology_controller
 //= require d3/d3
 //= require c3/c3
@@ -73,7 +77,6 @@
 //= require bootstrap-filestyle
 //= require bootstrap-select
 //= require bootstrap-hover-dropdown
-//= require patternfly
 //= require jquery.observe_field
 //= require miq_jquery_ujs_rails3
 //= require miq_ujs_bindings

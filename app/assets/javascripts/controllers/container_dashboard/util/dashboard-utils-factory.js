@@ -1,4 +1,4 @@
-angular.module('containerDashboard').factory('ContainerDashboardUtils', [function ContainerDashboardUtils () {
+angular.module('miq.util').factory('dashboardUtilsFactory', [function dashboardUtilsFactory () {
   var createProvidersStatus = function() {
     return {
       title: "Providers",
@@ -94,9 +94,13 @@ angular.module('containerDashboard').factory('ContainerDashboardUtils', [functio
       statusObject.count = 0;
     }
   };
-
+  var parseDate = function(date) {
+    myDate = Date.parse(date);
+    return isNaN(myDate) ? date : myDate
+  }
 
   return {
+    parseDate: parseDate,
     createProvidersStatus: createProvidersStatus,
     createNodesStatus: createNodesStatus,
     createContainersStatus: createContainersStatus,
