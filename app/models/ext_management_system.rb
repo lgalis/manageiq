@@ -516,4 +516,8 @@ class ExtManagementSystem < ActiveRecord::Base
   def self.blacklisted_events
     BlacklistedEvent.where(:provider_model => name, :ems_id => nil)
   end
+
+  def tenant_identity
+    User.super_admin.tap { |u| u.current_group = tenant.default_miq_group }
+  end
 end
