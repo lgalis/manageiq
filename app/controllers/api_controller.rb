@@ -60,6 +60,7 @@ class ApiController < ApplicationController
   include_concern 'Providers'
   include_concern 'Events'
   include_concern 'Features'
+  include_concern 'Instances'
   include_concern 'ProvisionRequests'
   include_concern "Rates"
   include_concern "Reports"
