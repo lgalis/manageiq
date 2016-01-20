@@ -37,9 +37,9 @@ shared_examples "logs_collect" do |type|
 
   context "nothing preventing collection" do
     it "succeeds" do
-      klass.any_instance.should_receive(:log_collection_active_recently?).and_return(false)
-      klass.any_instance.should_receive(:synchronize_logs).with(user.userid, {})
-      controller.should_receive(:replace_right_cell).with(active_node)
+      expect_any_instance_of(klass).to receive(:log_collection_active_recently?).and_return(false)
+      expect_any_instance_of(klass).to receive(:synchronize_logs).with(user.userid, :context => klass.name)
+      expect(controller).to receive(:replace_right_cell).with(active_node)
 
       controller.send(:logs_collect)
 
@@ -119,8 +119,8 @@ describe OpsController do
 
       _guid, @miq_server, @zone = EvmSpecHelper.remote_guid_miq_server_zone
       file_depot = FileDepotSmb.create(:name => "abc", :uri => "smb://abc")
-      @miq_server.should_receive(:log_depot).and_return(file_depot)
-      file_depot.should_receive(:authentication_password).and_return('default_password')
+      expect(@miq_server).to receive(:log_file_depot).and_return(file_depot)
+      expect(file_depot).to receive(:authentication_password).and_return('default_password')
       controller.instance_variable_set(:@record, @miq_server)
       controller.instance_variable_set(:@_params,
                                        :log_userid => "default_userid")
