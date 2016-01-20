@@ -9,7 +9,7 @@ var dialogFieldRefresh = {
 
   initializeDialogSelectPicker: function(fieldName, fieldId, selectedValue, url) {
     miqInitSelectPicker();
-    $('.selectpicker').selectpicker('val', selectedValue);
+    $('#' + fieldName).selectpicker('val', selectedValue);
     miqSelectPickerEvent(fieldName, url);
     $('#' + fieldName).on('change', function(){
       dialogFieldRefresh.triggerAutoRefresh(fieldId, "true");
@@ -46,6 +46,8 @@ var dialogFieldRefresh = {
 
     $.post('dynamic_radio_button_refresh', {name: fieldName, checked_value: selectedValue}).done(function(data) {
       dialogFieldRefresh.addOptionsToDropDownList(data, fieldId);
+      $('#' + fieldName).selectpicker('refresh');
+      $('#' + fieldName).selectpicker('val', selectedValue); 
     });
   },
 
