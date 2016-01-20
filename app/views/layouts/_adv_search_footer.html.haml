@@ -37,7 +37,7 @@
         = link_to(_("Delete"),
                   {:action => "adv_search_button",
                    :button => "delete" },
-                  :confirm => _("Delete the %{model} filter named %{filter}?") % {:model  => ui_lookup(:model => @edit[@expkey][:exp_mode]),
+                  'data-confirm-ujs' => _("Delete the %{model} filter named %{filter}?") % {:model  => ui_lookup(:model => @edit[@expkey][:exp_mode]),
                                                                                   :filter => @edit[:adv_search_name]},
                   :class   => "btn btn-danger",
                   :alt     => _("Delete the filter named %s") % @edit[@expkey][:selected][:description],
