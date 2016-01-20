@@ -46,6 +46,8 @@ RSpec.configure do |config|
   #   EvmSpecHelper.log_ruby_object_usage
   # end
 
+  config.include OneLinerExpectSyntax # is_expected syntax for RSpec 2
+
   # Preconfigure and auto-tag specs in the automation subdirectory a la rspec-rails
   config.include AutomationExampleGroup, :type => :automation, :example_group => {
     :file_path => config.escaped_path(%w(spec automation))
