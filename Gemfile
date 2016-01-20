@@ -6,6 +6,7 @@ eval_gemfile(File.expand_path("gems/pending/Gemfile", __dir__))
 
 gem "activerecord-deprecated_finders", "~>1.0.4",  :require => "active_record/deprecated_finders"
 gem "rails",                           "~>4.2.5"
+gem "activerecord-session_store",      "~>0.1.2"
 
 # Temporarily restrict Sprockets to < 3.0 while we deal with compatibility issues
 gem "sprockets-rails", "< 3.0.0"
