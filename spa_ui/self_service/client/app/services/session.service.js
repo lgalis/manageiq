@@ -61,7 +61,7 @@
       $sessionStorage.miqGroup = group;
 
       // reload
-      $window.location = $window.location.href;
+      $window.location.reload();
     }
 
     // Helpers
