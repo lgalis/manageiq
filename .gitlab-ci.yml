@@ -28,6 +28,7 @@ test:spu_ui-self_service:
   script:
     - bundle update
     - pushd spa_ui/self_service
+    - npm set progress=false
     - npm install bower gulp -g
     - npm install
     - bower install --allow-root --config.analytics=false # Due to running in a privileged comtainer
