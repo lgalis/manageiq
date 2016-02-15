@@ -3,7 +3,7 @@ describe('Session', function() {
   var reloadOk;
 
   beforeEach(function() {
-    module('app.core', 'gettext');
+    module('app.core');
 
     reloadOk = false;
 
