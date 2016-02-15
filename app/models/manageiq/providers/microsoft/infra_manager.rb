@@ -102,6 +102,13 @@ class ManageIQ::Providers::Microsoft::InfraManager < ManageIQ::Providers::InfraM
     execute_power_operation("Resume", vm.uid_ems)
   end
 
+  def vm_destroy(vm, _options = {})
+    if vm.power_state == "on"
+      vm_stop(vm)
+    end
+    execute_power_operation("Remove", vm.uid_ems)
+  end
+
   private
 
   def execute_power_operation(cmdlet, vm_uid_ems, *parameters)
