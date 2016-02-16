@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe VmOrTemplate do
   context ".event_by_property" do
     context "should add an EMS event" do
@@ -485,5 +483,40 @@ describe VmOrTemplate do
       vm.update_attributes(:miq_group_id => group2.id)
       expect(vm.tenant).to eq(tenant2)
     end
+  end
+
+  it "with ems_events" do
+    ems       = FactoryGirl.create(:ems_vmware_with_authentication)
+    vm        = FactoryGirl.create(:vm_vmware, :ext_management_system => ems)
+    ems_event = FactoryGirl.create(:ems_event)
+    vm.ems_events << ems_event
+    expect(vm.ems_events.first).to be_kind_of(EmsEvent)
+    expect(vm.ems_events.first.id).to eq(ems_event.id)
+  end
+
+  it "#miq_provision_vms" do
+    ems       = FactoryGirl.create(:ems_vmware_with_authentication)
+    template  = FactoryGirl.create(:template_vmware, :ext_management_system => ems)
+    vm        = FactoryGirl.create(:vm_vmware, :ext_management_system => ems)
+
+    options = {
+      :vm_name        => vm.name,
+      :vm_target_name => vm.name,
+      :src_vm_id      => [template.id, template.name]
+    }
+
+    provision = FactoryGirl.create(
+      :miq_provision_vmware,
+      :destination  => vm,
+      :source       => template,
+      :request_type => 'clone_to_vm',
+      :state        => 'finished',
+      :status       => 'Ok',
+      :options      => options
+    )
+
+    template.miq_provisions_from_template << provision
+
+    expect(template.miq_provision_vms.collect(&:id)).to eq([vm.id])
   end
 end
