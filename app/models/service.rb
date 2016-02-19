@@ -203,4 +203,10 @@ class Service < ActiveRecord::Base
   def v_total_vms
     vms.size
   end
+
+  def tenant_identity
+    user = evm_owner
+    user = User.super_admin.tap { |u| u.current_group = miq_group } if user.nil? || !user.miq_group_ids.include?(miq_group_id)
+    user
+  end
 end
