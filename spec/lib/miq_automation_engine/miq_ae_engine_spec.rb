@@ -156,11 +156,11 @@ module MiqAeEngineSpec
             MiqQueue.count.should == 1
 
             q = MiqQueue.first
-            q.class_name.should == 'MiqAeEngine'
-            q.method_name.should == 'deliver'
-            q.zone.should == MiqServer.my_zone
-            q.role.should == 'automate'
-            q.msg_timeout.should == 60.minutes
+            expect(q.class_name).to eq('MiqAeEngine')
+            expect(q.method_name).to eq('deliver')
+            expect(q.zone).to be_nil
+            expect(q.role).to eq('automate')
+            expect(q.msg_timeout).to eq(60.minutes)
 
             args = {
               :object_type      => object_type,
@@ -177,6 +177,39 @@ module MiqAeEngineSpec
               :ae_state_retries => @ae_state_retries,
             }
             q.args.first.should == args
+          end
+
+          it "with defaults, automate role, valid zone" do
+            allow_any_instance_of(MiqServer).to receive(:has_active_role?).and_return(true)
+            object_type = @ems.class.name
+            object_id   = @ems.id
+            expect(call_automate(object_type, object_id)).to eq(@ws)
+
+            expect(MiqQueue.count).to eq(1)
+            expect(MiqQueue.first).to have_attributes(
+              :class_name  => 'MiqAeEngine',
+              :method_name => 'deliver',
+              :zone        => MiqServer.my_zone,
+              :role        => 'automate',
+              :msg_timeout => 60.minutes,
+            )
+          end
+
+          it "with defaults, no automate role, nil zone" do
+            allow_any_instance_of(MiqServer).to receive(:has_active_role?).and_return(false)
+            object_type = @ems.class.name
+            object_id   = @ems.id
+            expect(call_automate(object_type, object_id)).to eq(@ws)
+
+            expect(MiqQueue.count).to eq(1)
+
+            expect(MiqQueue.first).to have_attributes(
+              :class_name  => 'MiqAeEngine',
+              :method_name => 'deliver',
+              :zone        => nil,
+              :role        => 'automate',
+              :msg_timeout => 60.minutes,
+            )
           end
         end
       end
