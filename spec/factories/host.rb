@@ -84,4 +84,8 @@ FactoryGirl.define do
   factory :host_with_default_resource_pool_with_vms, :parent => :host do
     after(:create) { |h| h.add_child(FactoryGirl.create(:default_resource_pool_with_vms)) }
   end
+  
+  trait :storage do
+    after(:create) { |h| h.storages << FactoryGirl.create(:storage) }
+  end
 end
