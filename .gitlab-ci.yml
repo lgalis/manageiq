@@ -31,7 +31,7 @@ test:spu_ui-self_service:
     - npm set progress=false
     - npm install bower gulp -g
     - npm install
-    - bower install --allow-root --config.analytics=false # Due to running in a privileged comtainer
+    - bower install --allow-root -F --config.analytics=false # Due to running in a privileged comtainer
     - gulp build
     - npm version
     - popd
