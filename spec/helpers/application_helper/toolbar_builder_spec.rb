@@ -3095,4 +3095,30 @@ describe ApplicationHelper do
       true
     end
   end
+
+  context "build_toolbar" do
+    before do
+      @layout = "catalogs"
+      helper.stub(:role_allows).and_return(true)
+      helper.stub(:x_active_tree).and_return(:ot_tree)
+    end
+
+    it "Enables edit and remove buttons for read-write orchestration templates" do
+      @record = FactoryGirl.create(:orchestration_template)
+      buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
+      edit_btn = buttons.select {|b| b['id'].end_with?("_edit")}.first
+      remove_btn = buttons.select {|b| b['id'].end_with?("_remove")}.first
+      expect(edit_btn["enabled"]).to eq("true")
+      expect(remove_btn["enabled"]).to eq("true")
+    end
+
+    it "Disables edit and remove buttons for read-only orchestration templates" do
+      @record = FactoryGirl.create(:orchestration_template_with_stacks)
+      buttons = helper.build_toolbar('orchestration_template_center_tb').first[:items]
+      edit_btn = buttons.select {|b| b['id'].end_with?("_edit")}.first
+      remove_btn = buttons.select {|b| b['id'].end_with?("_remove")}.first
+      expect(edit_btn["enabled"]).to eq("false")
+      expect(remove_btn["enabled"]).to eq("false")
+    end
+  end
 end
