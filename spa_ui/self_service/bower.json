@@ -59,6 +59,9 @@
         "build/ngprogress.js",
         "ngProgress.css"
       ]
+    },
+    "resolutions": {
+      "angular": "~1.4.6"
     }
   }
 }
