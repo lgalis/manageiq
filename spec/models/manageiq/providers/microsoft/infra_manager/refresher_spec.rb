@@ -18,6 +18,10 @@ describe ManageIQ::Providers::Microsoft::InfraManager::Refresher do
     WinRM::WinRMWebService.any_instance.stub(:run_powershell_script => YAML.load_file(data_file))
   end
 
+  it ".ems_type" do
+    expect(described_class.ems_type).to eq(:scvmm)
+  end
+
   it "will perform a full refresh" do
     2.times do  # Run twice to verify that a second run with existing data does not change anything
       @ems.reload
