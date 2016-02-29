@@ -5,6 +5,7 @@ describe ResourceAction do
     let(:user) { FactoryGirl.create(:user_with_group) }
     let(:zone_name) { "default" }
     let(:ra) { FactoryGirl.create(:resource_action) }
+    let(:miq_server) { FactoryGirl.create(:miq_server) }
     let(:q_args) do
       {
         :namespace        => nil,
@@ -31,7 +32,8 @@ describe ResourceAction do
     end
 
     before do
-      MiqServer.stub(:my_zone).and_return(zone_name)
+      allow(MiqServer).to receive(:my_zone).and_return(zone_name)
+      allow(MiqServer).to receive(:my_server).and_return(miq_server)
     end
 
     context 'with no target' do
