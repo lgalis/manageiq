@@ -44,4 +44,33 @@ describe VmOrTemplateController do
       expect(assigns(:flash_array).first[:level]).to eq(:error)
     end
   end
+
+  context "#show" do
+    before :each do
+      set_user_privileges
+      EvmSpecHelper.seed_specific_product_features("dashboard_show", "vandt_accord", "vms_instances_filter_accord")
+      @vm = FactoryGirl.create(:vm_vmware)
+    end
+
+    it "redirects user to explorer that they have access to" do
+      controller.instance_variable_set(:@sb, {})
+      get :show, :id => @vm.id
+      expect(response).to redirect_to(:controller => "vm_infra", :action => 'explorer')
+    end
+
+    it "redirects user to Workloads explorer when user does not have access to Infra Explorer" do
+      controller.instance_variable_set(:@sb, {})
+      get :show, :params => {:id => @vm.id}
+      expect(response).to redirect_to(:controller => "vm_or_template", :action => 'explorer')
+    end
+
+    it "redirects user back to the url they came from when user does not have access to any of VM Explorers" do
+      User.any_instance.stub(:role_allows?).and_return(false)
+      controller.instance_variable_set(:@sb, {})
+      request.env["HTTP_REFERER"] = "http://localhost:3000/dashboard/show"
+      get :show, :id => @vm.id
+      expect(response).to redirect_to(:controller => "dashboard", :action => 'show')
+      expect(assigns(:flash_array).first[:message]).to include("is not authorized to access")
+    end
+  end
 end
