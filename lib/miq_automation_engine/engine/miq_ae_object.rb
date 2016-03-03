@@ -115,7 +115,7 @@ module MiqAeEngine
 
       Benchmark.realtime_block(:inherit_time) do
         # Who do we inherit from
-        @inherits = @aec.inherits.blank? ? BASE_OBJECT : @aec.inherits
+        @inherits = BASE_OBJECT
 
         parts     = @inherits.split(PATH_SEPARATOR)
         klass     = parts.pop

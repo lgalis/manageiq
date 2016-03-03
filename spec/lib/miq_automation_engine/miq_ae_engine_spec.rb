@@ -623,34 +623,6 @@ module MiqAeEngineSpec
       roots.length.should == 1
     end
 
-    it "properly processes inheritance" do
-      EvmSpecHelper.import_yaml_model(File.join(@model_data_dir, "relation"), @domain)
-
-      ws = MiqAeEngine.instantiate("/EVM/MY_AUTOMATE/test1", @user)
-      ws.should_not be_nil
-      roots = ws.roots
-      roots.should_not be_nil
-      roots.should be_a_kind_of(Array)
-      roots.length.should == 1
-
-      obj = roots.first
-      ["attr1", "foo"].each { |a| obj.attributes.should have_key(a) }
-      obj.attributes["attr1"].should == "frank"
-      obj.attributes["foo"].should == "bar"
-
-      ws = MiqAeEngine.instantiate("/EVM/MY_AUTOMATE/test2", @user)
-      ws.should_not be_nil
-      roots = ws.roots
-      roots.should_not be_nil
-      roots.should be_a_kind_of(Array)
-      roots.length.should == 1
-
-      obj = roots.first
-      ["attr1", "foo"].each { |a| assert obj.attributes.key?(a) }
-      obj.attributes["attr1"].should == "miqaedb:/EVM/AUTOMATE/test1"
-      obj.attributes["foo"].should == "bar"
-    end
-
     it "properly processes .missing_instance" do
       EvmSpecHelper.import_yaml_model(File.join(@model_data_dir, "relation"), @domain)
 

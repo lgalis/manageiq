@@ -1,4 +1,5 @@
 require "spec_helper"
+include AutomationSpecHelper
 
 module MiqAeObjectSpec
   include MiqAeEngine
@@ -96,6 +97,15 @@ module MiqAeObjectSpec
       result  = @miq_obj.process_args_as_attributes({"Array::my_objects" => "VmOrTemplate::#{@vm.id},Host::#{host.id},ExtManagementSystem::#{ems.id}"})
       result["my_objects"].should be_kind_of(Array)
       result["my_objects"].length.should == 3
+    end
+
+    it "disabled inheritance" do
+      @user = FactoryGirl.create(:user_with_group)
+      create_state_ae_model(:name => 'LUIGI', :ae_class => 'CLASS1', :ae_namespace => 'A/C', :instance_name => 'FRED')
+      klass = MiqAeClass.find_by_name('CLASS1')
+      klass.update_attributes!(:inherits => '/LUIGI/A/C/missing')
+      workspace = MiqAeEngine.instantiate("/A/C/CLASS1/FRED", @user)
+      expect(workspace.root).not_to be_nil
     end
 
     context "#enforce_state_maxima" do
