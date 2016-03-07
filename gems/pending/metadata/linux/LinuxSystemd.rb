@@ -48,7 +48,6 @@ module MiqLinux
     end
 
     def parse_service(file)
-      return if @fs.fileSymLink?(file)
       debug "Parsing service unit: #{file}"
 
       unit        = @fs.fileBasename(file)
@@ -67,6 +66,7 @@ module MiqLinux
 
     rescue
       warn "Error parsing: #{file}"
+      nil       # make sure no intermediate result is returned!
     end
 
     def parse_description(inif)
@@ -85,7 +85,6 @@ module MiqLinux
     end
 
     def parse_target(file)
-      return if @fs.fileSymLink?(file)
       debug "Parsing target unit: #{file}"
 
       unit = @fs.fileBasename(file)
@@ -99,6 +98,7 @@ module MiqLinux
        :description => desc}
     rescue
       warn "Error parsing: #{file}"
+      nil       # make sure no intermediate result is returned!
     end
 
     def service_xml(service)
