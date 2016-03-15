@@ -1336,6 +1336,16 @@ describe ApplicationHelper do
         end
       end
 
+      context "and id = vm_start" do
+        before { @id = "vm_start" }
+
+        it "hides the start button" do
+          @record = FactoryGirl.create(:vm_amazon)
+          @record.stub(:retired => false, :current_state => "terminated")
+          @record.stub(:is_available?).with(:vm_start).and_return(false)
+        end
+      end
+
       context "and id = vm_collect_running_processes" do
         before do
           @id = "vm_collect_running_processes"
