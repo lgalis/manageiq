@@ -1341,9 +1341,8 @@ describe ApplicationHelper do
 
         it "hides the start button" do
           @record = FactoryGirl.create(:vm_amazon)
-          allow(@record).to receive_messages(:retired => false, :current_state => "terminated")
-          result = build_toolbar_hide_button(@id)
-          expect(result).to be_truthy
+          @record.stub(:retired => false, :current_state => "terminated")
+          @record.stub(:is_available?).with(:vm_start).and_return(false)
         end
       end
 
