@@ -136,38 +136,36 @@ describe OpsController do
     end
   end
 
-  render_views
-  context "OpsController::Settings" do
-    let(:user) { FactoryGirl.create(:user, :features => %w(zone_edit zone_new)) }
-    before do
-      login_as user
+  context "OpsController::Settings::Zones" do
+    before(:each) do
+      EvmSpecHelper.create_guid_miq_server_zone
+      @zone = FactoryGirl.create(:zone, :name => 'zoneName', :description => "description1")
+      @params = {
+        :action      => "zone_edit",
+        :button      => "add",
+        :description => "description01",
+      }
+      controller.stub(:assert_privileges)
     end
 
-    context "zone addition" do
-      it "#does not allow duplicate names when adding" do
-        miq_server = EvmSpecHelper.local_miq_server
-        MiqRegion.seed
-        EvmSpecHelper.create_guid_miq_server_zone
-        expect(controller).to receive(:render)
-        @zone = FactoryGirl.create(:zone, :name => 'zoneName', :description => "description1")
-        allow(controller).to receive(:assert_privileges)
-
-        @params = {:id => 'new',
-                   :action      => "zone_edit",
-                   :button      => "add"
-        }
-        edit = {:new => {:name        => @zone.name,
-                         :description => "description02",
-                         :ntp => {}}}
-        controller.instance_variable_set(:@edit, edit)
-        controller.instance_variable_set(:@_params, @params)
-        controller.instance_variable_set(:@sb, {:x_active_tree => :settings_tree, :active_tab =>"settings_evm_servers"})
-        allow(controller).to receive(:load_edit).and_return(true)
-        controller.send(:zone_edit)
-
-        expect(controller.send(:flash_errors?)).to be_truthy
-        expect(assigns(:flash_array).first[:message]).to include("Name has already been taken")
-      end
+    it "does not allow duplicate names when adding zone" do
+      @params[:id] = "new"
+      @params[:name] = @zone.name
+      controller.instance_variable_set(:@_params, @params)
+      edit = {:new => {:name        => @zone.name,
+                       :description => "description02",
+                       :ntp => {}}}
+      controller.instance_variable_set(:@edit, edit)
+      controller.instance_variable_set(:@sb,
+                                       :trees         => {:settings_tree => {:open_nodes => []}},
+                                       :active_accord => 'active_accord',
+                                       :active_tab    => 'settings_list',
+                                       :active_tree   => :settings_tree)
+      allow(controller).to receive(:load_edit).and_return(true)
+      allow(controller).to receive(:replace_right_cell).and_return
+      controller.send(:zone_edit)
+      controller.send(:flash_errors?).should be_true
+      assigns(:flash_array).first[:message].should include("Name has already been taken")
     end
   end
 
