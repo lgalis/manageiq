@@ -923,7 +923,7 @@ class ProviderForemanController < ApplicationController
                                     :locals  => {:controller => 'provider_foreman'}])
     elsif valid_configuration_script_record?(@configuration_script_record)
       presenter.hide(:form_buttons_div)
-      presenter.update(:main_div, r[:partial => "cm_job_template",
+      presenter.update(:main_div, r[:partial => "configuration_script",
                                     :locals  => {:controller => 'provider_foreman'}])
     else
       presenter.update(:main_div, r[:partial => 'layouts/x_gtl'])
