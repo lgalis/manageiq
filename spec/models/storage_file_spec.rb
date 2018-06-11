@@ -92,6 +92,12 @@ describe StorageFile do
       expect(result[:snapshot].size).to eq(1)
     end
 
+    it "marks as iso for files with extension .iso" do
+      file = StorageFile.new(:ext_name => 'iso')
+      result = described_class.split_file_types([file])
+      expect(result[:iso].size).to eq(1)
+    end
+
     it "marks as debris for all other file types" do
       file = StorageFile.new(:ext_name => 'whatever_file')
       result = described_class.split_file_types([file])

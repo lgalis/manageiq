@@ -15,7 +15,7 @@ class StorageFile < ApplicationRecord
   end
 
   def self.split_file_types(files)
-    ret = {:disk => [], :snapshot => [], :vm_ram => [], :vm_misc => [], :debris => []}
+    ret = {:disk => [], :snapshot => [], :vm_ram => [], :vm_misc => [], :iso => [], :debris => []}
 
     files.each do |f|
       case f.ext_name
@@ -31,6 +31,8 @@ class StorageFile < ApplicationRecord
         ret[:vm_ram] << f
       when 'vmx', 'vmtx', 'vmxf', 'log', 'hlog'
         ret[:vm_misc] << f
+      when 'iso'
+        ret[:iso] << f
       else
         if f.ext_name[0, 5] == "redo_"
           ret[:snapshot] << f
