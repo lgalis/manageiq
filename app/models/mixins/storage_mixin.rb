@@ -1,6 +1,6 @@
 module StorageMixin
   extend ActiveSupport::Concern
-  STORAGE_FILE_TYPES = [:vm_ram, :snapshot, :disk, :debris, :vm_misc]
+  STORAGE_FILE_TYPES = [:vm_ram, :snapshot, :disk, :iso, :debris, :vm_misc]
 
   # Used to extend classes that utilize the StorageFiles class (Storage and Vm)
   included do
